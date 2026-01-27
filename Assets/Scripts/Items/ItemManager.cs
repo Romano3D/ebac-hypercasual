@@ -21,6 +21,13 @@ public class ItemManager : Singleton<ItemManager>
         coinsSpecial.value = 0;
         UpdateUI();
     }
+    public void RegisterCoin(ItemCollactableCoin coin)
+    {
+        AddCoins(1);
+
+        // Aqui você pode disparar animação, som, VFX etc
+        // Ex: StartCoroutine(AnimateCoinToUI(coin.transform));
+    }
     public void AddCoins(int amount = 1)
     {
         coins.value += amount;
