@@ -20,13 +20,16 @@ public class PlayerController : Singleton<PlayerController>
     public GameObject endScreen;
     public GameObject startScreen;
 
+    [Header("TextMeshPro")]
+    public TextMeshPro uiTextPowerUp;
+
+    public bool invencible = true;
+
     [Header("Coins Setup")]
     public GameObject coinColector;
 
-    public bool invencible = false;
-
-    [Header("TextMeshPro")]
-    public TextMeshPro uiTextPowerUp;
+    [Header("Animation")]
+    public AnimatorManager animatorManager;
 
     //privates
     private bool _canRun;
@@ -55,7 +58,11 @@ public class PlayerController : Singleton<PlayerController>
     {
         if (collision.transform.tag == tagToCheckEnemy)
         {
-            if(!invencible) EndGame();
+            if (!invencible)
+            {
+                MoveBack(collision.transform);
+                EndGame(AnimatorManager.AnimationType.DEATH);
+            }
         }
     }
 
@@ -67,15 +74,22 @@ public class PlayerController : Singleton<PlayerController>
         }
     }
 
-    private void EndGame()
+    private void MoveBack(Transform t)
+    {
+        t.DOMoveZ(1f, .3f).SetRelative();
+    }
+
+    private void EndGame(AnimatorManager.AnimationType  animationType = AnimatorManager.AnimationType.IDLE)
     {
         _canRun = false;
         endScreen.SetActive(true);
+        animatorManager.Play(animationType);
     }
 
     public void StartToRun()
     {
         _canRun = true;
+        animatorManager.Play(AnimatorManager.AnimationType.RUN);
 
         // Desativa a tela de Play
         if (startScreen != null)
