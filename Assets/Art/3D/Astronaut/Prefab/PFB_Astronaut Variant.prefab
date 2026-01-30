@@ -160,4 +160,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6916697f9157c934a846d06cb953d46d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animatorSetups: []
+  animator: {fileID: 7193805671317595757}
+  animatorSetups:
+  - type: 0
+    trigger: Idle
+    speed: 1
+  - type: 1
+    trigger: Run
+    speed: 1
+  - type: 2
+    trigger: Death
+    speed: 1.5
