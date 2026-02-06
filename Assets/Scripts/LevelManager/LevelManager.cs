@@ -12,41 +12,39 @@ public class LevelManager : MonoBehaviour
 
     public List<LevelPieceBaseSetup> levelPieceBaseSetups;
 
+    [SerializeField] private int _levelIndex = 0;
+
     public float timeBetweenPieces = .3f;
 
-    [SerializeField] private int _index;
-    private GameObject _currentLevel;
+    [SerializeField] private int _leveIndex;
+    private LevelPieceBaseSetup _currSetup;
+    [SerializeField] private List<LevelPieceBase> _spawnedPieces = new();
 
-    [SerializeField] private List<LevelPieceBase> _spawnedPieces = new List<LevelPieceBase>();
-    private LevelPieceBaseSetup _currSetup; 
+    private GameObject _currentLevel;
+    private LevelPieceBase spawnedPiece;
 
     private void Awake()
     {
-        //SpawnNextLevel();
-        //CreateLevelPieces();
+        SpawnNextLevel();
     }
 
     private void SpawnNextLevel()
     {
-        if (_currentLevel != null)
-            Destroy(_currentLevel);
+        CleanSpawnedPieces();
 
-        if (_index >= levels.Count)
-            _index = 0;
+        if (_levelIndex >= levelPieceBaseSetups.Count)
+            _levelIndex = 0;
 
-        _currentLevel = Instantiate(levels[_index], container);
-        _currentLevel.transform.localPosition = Vector3.zero;
+        _currSetup = levelPieceBaseSetups[_levelIndex];
+        CreateLevelPieces(_currSetup);
 
-        // 🔥 GERA AS PIECES PARA ESSE LEVEL
-        CreateLevelPiecesForCurrentLevel();
-
-        _index++;
+        _levelIndex++;
     }
     private void CreateLevelPiecesForCurrentLevel()
     {
         _spawnedPieces.Clear();
 
-        var setup = levelPieceBaseSetups[_index];
+        var setup = levelPieceBaseSetups[_leveIndex];
 
         for (int i = 0; i < setup.piecesStartNumber; i++)
             CreateLevelPiece(setup.levelPiecesStart, _currentLevel.transform);
@@ -60,62 +58,55 @@ public class LevelManager : MonoBehaviour
 
     private void ResetLevelIndex()
     {
-        _index = 0;
+        _leveIndex = 0;
     }
 
     #region
-    private void CreateLevelPieces()
+    private void CreateLevelPieces(LevelPieceBaseSetup setup)
     {
-        cleanSpawnedPieces();
+        _spawnedPieces.Clear();
 
-        if (_currSetup != null)
-        {
-            _index++;
+        for (int i = 0; i < setup.piecesStartNumber; i++)
+            CreateLevelPiece(setup.levelPiecesStart, container);
 
-            if (_index >= levelPieceBaseSetups.Count)
-            {
-                ResetLevelIndex();
-            }
-        }
+        for (int i = 0; i < setup.piecesNumber; i++)
+            CreateLevelPiece(setup.levelPieces, container);
 
-        _currSetup = levelPieceBaseSetups[_index];
-
-        for (int i = 0; i < _currSetup.piecesStartNumber; i++)
-        {
-            CreateLevelPiece(_currSetup.levelPiecesStart, _currentLevel.transform);
-        }
-
-        for (int i = 0; i < _currSetup.piecesNumber; i++)
-        {
-            CreateLevelPiece(_currSetup.levelPieces, _currentLevel.transform);
-        }
-
-        for (int i = 0; i < _currSetup.piecesEndNumber; i++)
-        {
-            CreateLevelPiece(_currSetup.levelPiecesEnd, _currentLevel.transform);
-        }
+        for (int i = 0; i < setup.piecesEndNumber; i++)
+            CreateLevelPiece(setup.levelPiecesEnd, container);
     }
 
     private void CreateLevelPiece(List<LevelPieceBase> list, Transform parent)
     {
-        var piece = list[Random.Range(0, list.Count)];
-        var spawnedPiece = Instantiate(piece, parent);
+        var prefab = list[Random.Range(0, list.Count)];
+        var piece = Instantiate(prefab, parent);
 
         if (_spawnedPieces.Count > 0)
         {
-            var lastPiece = _spawnedPieces[_spawnedPieces.Count - 1];
-            spawnedPiece.transform.position = lastPiece.endPiece.position;
+            var lastPiece = _spawnedPieces[^1];
+            piece.transform.position = lastPiece.endPiece.position;
+        }
+        else
+        {
+            piece.transform.localPosition = Vector3.zero;
         }
 
-        _spawnedPieces.Add(spawnedPiece);
+        foreach (var p in piece.GetComponentsInChildren<ArtPiece>())
+        {
+            p.ChangePiece(
+                ArtManager.Instance
+                    .GetSetupByType(_currSetup.artType)
+                    .gameObject
+            );
+        }
+
+        _spawnedPieces.Add(piece);
     }
 
-    private void cleanSpawnedPieces()
+    private void CleanSpawnedPieces()
     {
-        for (int i = _spawnedPieces.Count - 1; i >= 0; i--)
-        {
-            Destroy(_spawnedPieces[i].gameObject);
-        }
+        foreach (var piece in _spawnedPieces)
+            Destroy(piece.gameObject);
 
         _spawnedPieces.Clear();
     }

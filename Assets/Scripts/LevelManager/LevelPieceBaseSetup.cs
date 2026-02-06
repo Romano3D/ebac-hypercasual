@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu]
 public class LevelPieceBaseSetup : ScriptableObject
 {
+    public ArtManager.ArtType artType;
+
     [Header("Pieces")]
     public List<LevelPieceBase> levelPiecesStart;
     public List<LevelPieceBase> levelPieces;
