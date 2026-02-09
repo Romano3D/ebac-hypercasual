@@ -56,6 +56,7 @@ public class LevelManager : MonoBehaviour
             CreateLevelPiece(setup.levelPiecesEnd, _currentLevel.transform);
     }
 
+
     private void ResetLevelIndex()
     {
         _leveIndex = 0;
@@ -80,6 +81,19 @@ public class LevelManager : MonoBehaviour
     {
         var prefab = list[Random.Range(0, list.Count)];
         var piece = Instantiate(prefab, parent);
+
+        var renderers = piece.GetComponentsInChildren<MeshRenderer>();
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            var mat = renderers[i].material;
+
+            string prop = mat.HasProperty("_BaseColor") ? "_BaseColor" : "_Color";
+
+            mat.SetColor(
+                prop,
+                ColorManager.Instance.GetColorByType(_currSetup.artType, 0)
+            );
+        }
 
         if (_spawnedPieces.Count > 0)
         {
@@ -119,7 +133,9 @@ public class LevelManager : MonoBehaviour
             CreateLevelPiece(_currSetup.levelPieces, _currentLevel.transform);
             yield return new WaitForSeconds(timeBetweenPieces);
         }
-    }
+      //  ColorManager.Instance.ChangeColorByType(_currSetup.artType);
+    
+}
 
     #endregion
     private void Update()
