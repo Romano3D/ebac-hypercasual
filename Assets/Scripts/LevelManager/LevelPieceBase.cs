@@ -5,4 +5,6 @@ using UnityEngine;
 public class LevelPieceBase : MonoBehaviour
 {
     public Transform endPiece;
+
+    private ArtManager.ArtType artType;
 }

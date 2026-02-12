@@ -8,24 +8,16 @@ public class ColorManager : Singleton<ColorManager>
     public List<Material> materials;
     public List<ColorSetup> colorSetups;
 
-    public Color GetColorByType(ArtManager.ArtType artType, int index)
+    public void ChangeColorByType(ArtManager.ArtType artType)
     {
         var setup = colorSetups.Find(i => i.artType == artType);
 
-        if (setup == null)
+        for (int i = 0; i < materials.Count; i++)
         {
-            Debug.LogError($"ColorSetup não encontrado: {artType}");
-            return Color.white;
+            materials[i].SetColor("_Color", setup.colors[i]);
         }
-
-        if (index >= setup.colors.Count)
-        {
-            Debug.LogWarning("Índice de cor fora do range");
-            return setup.colors[0];
-        }
-
-        return setup.colors[index];
     }
+}
 
     [System.Serializable]
     public class ColorSetup
@@ -34,4 +26,4 @@ public class ColorManager : Singleton<ColorManager>
         public List<Color> colors;
     }
 
-}
+
