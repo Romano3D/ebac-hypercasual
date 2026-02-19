@@ -6,7 +6,7 @@ public class MovimentHelper : MonoBehaviour
 {
     public List<Transform> positions;
 
-    public float duration = 1f;
+    public float duration = 3f;
 
     private int _index = 0;
 

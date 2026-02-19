@@ -2391,6 +2391,9 @@ MonoBehaviour:
   timeBetweenPieces: 0.3
   _index: 1
   _spawnedPieces: []
+  scaleDuration: 0.2
+  scaleTimeBetweenPieces: 0.1
+  ease: 27
 --- !u!4 &2052107409
 Transform:
   m_ObjectHideFlags: 0
