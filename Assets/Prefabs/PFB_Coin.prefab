@@ -93,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9160957712365670081}
   - component: {fileID: 187157803620149929}
-  - component: {fileID: 892770855185947991}
+  - component: {fileID: 1795669589326788641}
   m_Layer: 0
   m_Name: PFB_Coin
   m_TagString: Untagged
@@ -138,7 +138,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.6
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &892770855185947991
+--- !u!114 &1795669589326788641
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,11 +147,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2918801334353295999}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 421071e698c1f0b47b881a529b92dfc9, type: 3}
+  m_Script: {fileID: 11500000, guid: 8a6b1443db27a574895de96adbc1d98c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  compareTag: CoinCollector
+  compareTag: Player
   particleVFX: {fileID: 0}
   timeToHide: 3
-  graphicItem: {fileID: 2918801334353295999}
+  graphicItem: {fileID: 0}
   audioSource: {fileID: 0}
+  Coincollider: {fileID: 0}
+  collect: 0
+  lerp: 5
+  mindistance: 1
