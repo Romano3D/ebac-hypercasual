@@ -3,6 +3,7 @@ using Ebac.Core.Singleton;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class CoinsAnimationManager : Singleton<CoinsAnimationManager>
 {
@@ -46,6 +47,9 @@ public class CoinsAnimationManager : Singleton<CoinsAnimationManager>
         {
             p.transform.localScale = Vector3.zero;
         }
+
+        Sort();
+
         yield return null;
 
         for (int i = 0; i < itens.Count; i++)
@@ -53,5 +57,10 @@ public class CoinsAnimationManager : Singleton<CoinsAnimationManager>
             itens[i].transform.DOScale(1, scaleDuration).SetEase(ease);
             yield return new WaitForSeconds(scaleTimeBetweenPieces);
         }
+    }
+    private void Sort()
+    {
+        itens = itens.OrderBy(
+            x => Vector3.Distance(this.transform.position, x.transform.position)).ToList();
     }
 }

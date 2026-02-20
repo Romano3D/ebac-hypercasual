@@ -4,24 +4,29 @@ using UnityEngine;
 
 public class ItemCollactableCoin : ItemCollactableBase
 {
-    public Collider Coincollider;
+    private Collider coinCollider;
     public bool collect = false;
     public float lerp = 5f;
     public float mindistance = 1f;
 
+    private void Awake()
+    {
+        coinCollider = GetComponent<Collider>();
+    }
+
     private void Start()
     {
         CoinsAnimationManager.Instance.RegisterCoin(this);
-
-       // ItemManager.Instance.RegisterCoin(this);
     }
+
     protected override void OnCollect()
     {
         base.OnCollect();
-        Coincollider.enabled = false;
+        coinCollider.enabled = false;
         collect = true;
-       // PlayerController.Instance.Bounce();
+        PlayerController.Instance.Bounce();
     }
+
     protected override void Collect()
     {
         OnCollect();
@@ -31,14 +36,18 @@ public class ItemCollactableCoin : ItemCollactableBase
     {
         if (collect)
         {
-            transform.position = Vector3.Lerp(transform.position, PlayerController.Instance.transform.position, lerp * Time.deltaTime);
+            transform.position = Vector3.Lerp(
+                transform.position,
+                PlayerController.Instance.transform.position,
+                lerp * Time.deltaTime
+            );
 
-            if(Vector3.Distance(transform.position, PlayerController.Instance.transform.position) < mindistance) 
+            if (Vector3.Distance(transform.position,
+                PlayerController.Instance.transform.position) < mindistance)
             {
                 HideItens();
                 Destroy(gameObject);
+            }
         }
     }
-
-  }
 }

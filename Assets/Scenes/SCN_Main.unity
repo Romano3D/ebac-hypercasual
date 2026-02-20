@@ -723,6 +723,7 @@ GameObject:
   - component: {fileID: 363511218}
   - component: {fileID: 363511222}
   - component: {fileID: 363511223}
+  - component: {fileID: 363511224}
   m_Layer: 0
   m_Name: PlayerContainer
   m_TagString: Player
@@ -869,6 +870,22 @@ MonoBehaviour:
   invencible: 0
   coinColector: {fileID: 1929331512}
   animatorManager: {fileID: 999181006}
+  _bounceHelper: {fileID: 363511224}
+--- !u!114 &363511224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363511216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee8dcb794251a214eaf0924c1bcd7c44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleDuration: 0.06
+  scaleBounce: 1.2
+  ease: 1
 --- !u!1001 &402001309
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -959,7 +976,7 @@ GameObject:
   - component: {fileID: 624575158}
   - component: {fileID: 624575157}
   m_Layer: 0
-  m_Name: CoinsManager
+  m_Name: CoinsAnimationManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -978,8 +995,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itens: []
-  scaleDuration: 0.2
-  scaleTimeBetweenPieces: 0.1
+  scaleDuration: 0.1
+  scaleTimeBetweenPieces: 0.05
   ease: 27
 --- !u!4 &624575158
 Transform:
@@ -990,7 +1007,7 @@ Transform:
   m_GameObject: {fileID: 624575156}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -28.025946, y: 17.023687, z: 34.94179}
+  m_LocalPosition: {x: -0, y: -0.04, z: 3.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
