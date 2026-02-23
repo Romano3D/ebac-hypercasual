@@ -42,7 +42,12 @@ public class ItemCollactableBase : MonoBehaviour
     }
     protected virtual void OnCollect()
     {
-        if (particleVFX != null) particleVFX.Play();
+        if (particleVFX != null)
+        {
+            particleVFX.transform.SetParent(null);
+            particleVFX.Play();
+
+        }
         if (audioSource != null) audioSource.Play();
     }
 

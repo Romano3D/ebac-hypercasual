@@ -153,7 +153,7 @@ MonoBehaviour:
   compareTag: Player
   particleVFX: {fileID: 0}
   timeToHide: 3
-  graphicItem: {fileID: 0}
+  graphicItem: {fileID: 3455287929337324009}
   audioSource: {fileID: 0}
   duration: 0
   sizeAmount: 7
